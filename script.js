@@ -97,6 +97,23 @@ noUpperCase = specialCharacters.concat(numericCharacters, lowerCasedCharacters);
 noNumbers = upperCasedCharacters.concat(lowerCasedCharacters, specialCharacters);
 noLower = specialCharacters.concat(numericCharacters, upperCasedCharacters, specialCharacters);
 
+// Special characters options
+specialAndLower = specialCharacters.concat( lowerCasedCharacters);
+specialAndUpper = specialCharacters.concat( upperCasedCharacters);
+specialAndNumeric = specialCharacters.concat( numericCharacters);
+
+// Numeric characters options
+numericAndSpecial = numericCharacters.concat(specialCharacters);
+
+// Lower case characters options
+lowerAndSpecial = lowerCasedCharacters.concat( specialCharacters);
+lowerAndNumeric = lowerCasedCharacters.concat(numericCharacters);
+
+// Upper characters options
+upperAndLower = upperCasedCharacters.concat( lowerCasedCharacters);
+upperAndSpecial = upperCasedCharacters.concat( specialCharacters);
+upperAndNumeric = upperCasedCharacters.concat( numericCharacters);
+
 // Variable arrays with different characters combinations
 var shuffled = allChars.sort(() => 0.5 - Math.random());
 var shuffledNoNumb = noNumbers.sort(() => 0.5 - Math.random());
@@ -104,16 +121,28 @@ var shuffledNoSpecial = noSpecialChars.sort(() => 0.5 - Math.random());
 var shuffledNoUpper = noUpperCase.sort(() => 0.5 - Math.random());
 var shuffledNoLower = noLower.sort(() => 0.5 - Math.random());
 
+// Shuffled lower characters options
+var shuffledLowerAndSpecial = lowerAndSpecial.sort(() => 0.5 - Math.random());
+var shuffledLowerAndNumeric = lowerAndNumeric.sort(() => 0.5 - Math.random());
 
-// Single characters only
+// Shuffled upper characters options
+var shuffledUpperAndLower = upperAndLower.sort(() => 0.5 - Math.random());
+var shuffledUpperAndSpecial = upperAndSpecial.sort(() => 0.5 - Math.random());
+var shuffledUpperAndNumeric = upperAndNumeric.sort(() => 0.5 - Math.random());
+
+// Shuffled numeric options
+var shuffledNumericAndSpecial = numericAndSpecial.sort(() => 0.5 - Math.random());
+
+// Single array of characters only
 var shuffledOnlyNumber = numericCharacters.sort(() => 0.5 - Math.random());
 var shuffledOnlySpecial = specialCharacters.sort(() => 0.5 - Math.random());
 var shuffledOnlyUpper = upperCasedCharacters.sort(() => 0.5 - Math.random());
 var shuffledOnlyLower = lowerCasedCharacters.sort(() => 0.5 - Math.random());
 
+
 // Main function to check user's password options
 function testFunc(x) {
-var x = prompt("How many characters you want?")
+var x = parseInt(prompt("How many characters you want?"))
 var upperCase = confirm("Do you want upper case characters?")
 var lowerCase = confirm("Do you want lower case characters?")
 var specialChars = confirm("Do you want special characters?")
@@ -121,9 +150,6 @@ var numericChars = confirm("Do you want numeric characters?")
     // Check min and max characters
     if (x > 64 || x < 10)
     document.getElementById('password').innerHTML = ("Please select a minimun of 10 characters and a maximum of 65 characters");
-    // // Wrong input
-    // else if (typeof(x) != 'string')
-    // document.getElementById('password').innerHTML = ("Please enter a numeric value");
 
     // All characters included
     else if (lowerCase === true && upperCase === true && specialChars === true && numericChars === true)
@@ -135,7 +161,7 @@ var numericChars = confirm("Do you want numeric characters?")
 
     // Only numeric characters
     else if (lowerCase === false && upperCase === false && specialChars === false && numericChars === true)
-    document.getElementById('password').innerHTML = (shuffledOnlyNumber.slice(0, x).toString().replace(/,/g,''));
+    document.getElementById('password').innerHTML = Array.from({length: x}, () => Math.floor(Math.random() * 10).toString().replace(/,/g,''));
 
     // No special characters
     else if (lowerCase === true && upperCase === true && specialChars === false && numericChars === true)
@@ -161,9 +187,34 @@ var numericChars = confirm("Do you want numeric characters?")
     else if (lowerCase === true && upperCase === false && specialChars === false && numericChars === false)
     document.getElementById('password').innerHTML = (shuffledOnlyLower.slice(0, x).toString().replace(/,/g,''));
 
+    // Upper and lower characters
+    else if (lowerCase === true && upperCase === true && specialChars === false && numericChars === false)
+    document.getElementById('password').innerHTML = (shuffledUpperAndLower.slice(0, x).toString().replace(/,/g,''));
+
+    // Upper and special characters
+    else if (lowerCase === false && upperCase === true && specialChars === true && numericChars === false)
+    document.getElementById('password').innerHTML = (shuffledUpperAndSpecial.slice(0, x).toString().replace(/,/g,''));
+
+    // Upper and numeric characters
+    else if (lowerCase === false && upperCase === true && specialChars === false && numericChars === true)
+    document.getElementById('password').innerHTML = (shuffledUpperAndNumeric.slice(0, x).toString().replace(/,/g,''));
+
+    // Lower and numeric characters
+    else if (lowerCase === true && upperCase === false && specialChars === false && numericChars === true)
+    document.getElementById('password').innerHTML = (shuffledLowerAndNumeric.slice(0, x).toString().replace(/,/g,''));
+
+    // Lower and special characters
+    else if (lowerCase === true && upperCase === false && specialChars === true && numericChars === false)
+    document.getElementById('password').innerHTML = (shuffledLowerAndSpecial.slice(0, x).toString().replace(/,/g,''));
+
+    // Numeric and special characters only
+    else if (lowerCase === false && upperCase === false && specialChars === true && numericChars === true)
+    document.getElementById('password').innerHTML = (shuffledNumericAndSpecial.slice(0, x).toString().replace(/,/g,''));
+
     // None selected
     else if (lowerCase === false && upperCase === false && specialChars === false && numericChars === false)
     document.getElementById('password').innerHTML = ("Password not generated");
+
     // Default output
     else
     document.getElementById('password').innerHTML = (shuffled.slice(0, x).toString().replace(/,/g,''));
