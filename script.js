@@ -88,68 +88,84 @@ var upperCasedCharacters = [
   "Z",
 ];
 
+
+// Defining different combinations of characters
 var allChars = []
 allChars = upperCasedCharacters.concat(numericCharacters, lowerCasedCharacters, specialCharacters);
 noSpecialChars = upperCasedCharacters.concat(numericCharacters, lowerCasedCharacters);
 noUpperCase = specialCharacters.concat(numericCharacters, lowerCasedCharacters);
 noNumbers = upperCasedCharacters.concat(lowerCasedCharacters, specialCharacters);
+noLower = specialCharacters.concat(numericCharacters, upperCasedCharacters, specialCharacters);
 
-
+// Variable arrays with different characters combinations
 var shuffled = allChars.sort(() => 0.5 - Math.random());
 var shuffledNoNumb = noNumbers.sort(() => 0.5 - Math.random());
 var shuffledNoSpecial = noSpecialChars.sort(() => 0.5 - Math.random());
 var shuffledNoUpper = noUpperCase.sort(() => 0.5 - Math.random());
+var shuffledNoLower = noLower.sort(() => 0.5 - Math.random());
+
+// Single characters only
+var shuffledOnlyNumber = numericCharacters.sort(() => 0.5 - Math.random());
+var shuffledOnlySpecial = specialCharacters.sort(() => 0.5 - Math.random());
+var shuffledOnlyUpper = upperCasedCharacters.sort(() => 0.5 - Math.random());
+var shuffledOnlyLower = lowerCasedCharacters.sort(() => 0.5 - Math.random());
 
 
-// var startGenerator = confirm("Please select your password options");
-
-var x = document.getElementById("generate").addEventListener('click', prompt("How many characters you want?"))
-var upperCase = confirm("Do you want upper case?")
-var specialChars = confirm("Do you want special chars?")
-var numericChars = confirm("Do you want numeric chars?")
-x = parseInt(x);
-
-
+// Main function to check user's password options
 function testFunc(x) {
-    if (upperCase === true && specialChars === true && numericChars === true && x < 65)
+var x = prompt("How many characters you want?")
+var upperCase = confirm("Do you want upper case characters?")
+var lowerCase = confirm("Do you want lower case characters?")
+var specialChars = confirm("Do you want special characters?")
+var numericChars = confirm("Do you want numeric characters?")
+    // Check min and max characters
+    if (x > 64 || x < 10)
+    document.getElementById('password').innerHTML = ("Please select a minimun of 10 characters and a maximum of 65 characters");
+    // // Wrong input
+    // else if (typeof(x) != 'string')
+    // document.getElementById('password').innerHTML = ("Please enter a numeric value");
+
+    // All characters included
+    else if (lowerCase === true && upperCase === true && specialChars === true && numericChars === true)
     document.getElementById('password').innerHTML = (shuffled.slice(0, x));
-    else if (upperCase === true && specialChars === true && numericChars === false  && x < 65)
+
+    // No numeric characters
+    else if (lowerCase === true && upperCase === true && specialChars === true && numericChars === false)
     document.getElementById('password').innerHTML = (shuffledNoNumb.slice(0, x));
-    else if (upperCase === true && specialChars === false && nuaaaaamericChars === true  && x < 65)
+
+    // Only numeric characters
+    else if (lowerCase === false && upperCase === false && specialChars === false && numericChars === true)
+    document.getElementById('password').innerHTML = (shuffledOnlyNumber.slice(0, x));
+
+    // No special characters
+    else if (lowerCase === true && upperCase === true && specialChars === false && numericChars === true)
     document.getElementById('password').innerHTML = (shuffledNoSpecial.slice(0, x));
-    else if (upperCase === false && specialChars === true && numericChars === true  && x < 65)
+
+    // Only special characters
+    else if (lowerCase === false && upperCase === false && specialChars === true && numericChars === false)
+    document.getElementById('password').innerHTML = (shuffledOnlySpecial.slice(0, x));
+
+    // No upper case characters
+    else if (lowerCase === true && upperCase === false && specialChars === true && numericChars === true)
     document.getElementById('password').innerHTML = (shuffledNoUpper.slice(0, x));
-    else if (upperCase === false && specialChars === false && numericChars === false  && x < 65)
+
+    // Only upper case characters
+    else if (lowerCase === false && upperCase === true && specialChars === false && numericChars === false)
+    document.getElementById('password').innerHTML = (shuffledOnlyUpper.slice(0, x));
+
+    // No lower case characters
+    else if (lowerCase === false && upperCase === true && specialChars === true && numericChars === true)
+    document.getElementById('password').innerHTML = (shuffledNoLower.slice(0, x));
+
+    // Only lower case characters 
+    else if (lowerCase === true && upperCase === false && specialChars === false && numericChars === false)
+    document.getElementById('password').innerHTML = (shuffledOnlyLower.slice(0, x));
+
+    // None selected
+    else if (lowerCase === false && upperCase === false && specialChars === false && numericChars === false)
     document.getElementById('password').innerHTML = ("Password not generated");
-    else if (x.length <= 65)
-    console.log("Test")
-    // document.getElementById('password').innerHTML = ("Max characters is 65");
+    // Default output
     else
     document.getElementById('password').innerHTML = (shuffled.slice(0, x));
     return;
 }
-
-testFunc(x);
-console.log(typeof(x))
-
-// // // Function to generate password with user input
-// function generatePassword() {
-//   if(x <= 65)
-//   document.getElementById('password').innerHTML = (testFunc(x));
-//   else 
-//   document.getElementById('password').innerHTML = ("Password not generated");
-//   return;
-// }
-
-// generatePassword()
-
-// // // Get references to the #generate element
-document.getElementById("generate").addEventListener('click', testFunc(x));
-
-// // // // Add event listener to generate button
-
-// // // // // Write password to the #password input
-// function writePassword() {
-//   var password = generatePassword();
-//   var passwordText = document.querySelector('password');
-// }
